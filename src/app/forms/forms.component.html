@@ -1,0 +1,5 @@
+<h2>-> Form works!</h2>
+<p>two way data binding</p>
+<input [(ngModel)]="name" type="text" #myName />
+<button (click)="logMsg(myName.value)">See Cosole</button>
+<p [style.color]="'orange'">{{ name }}</p>

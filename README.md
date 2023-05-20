@@ -1,27 +1,205 @@
-# Angular2
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.0.
+# Angular Learning! 
 
-## Development server
+## Start Angular with Angular CLI
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### Installation:
 
-## Code scaffolding
+```
+> node -v
+> npm -v
+> npm install -g @angular/cli
+> ng -v
+> ng new hello-world
+> cd hello-world
+> ng serve
+> open http://localhost:4200/
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Generate new component and add the selector to the main view (app.componenet.html)
 
-## Build
+```
+> ng g c test
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+output:
+CREATE src/app/test/test.component.html (19 bytes)
+CREATE src/app/test/test.component.spec.ts (545 bytes)
+CREATE src/app/test/test.component.ts (194 bytes)
+CREATE src/app/test/test.component.css (0 bytes)
+UPDATE src/app/app.module.ts (388 bytes)
+```
 
-## Running unit tests
+Note: Newly generated component/module has to be included in app.module.ts
+and app.component.html is the start poit to add the new html selectors
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+#### Three ways to specify the selector for your component
 
-## Running end-to-end tests
+```
+specify                                                          usecase
+--------------------------------------------------------------------------------------------
+> as a custom html tag
+@Component({
+  selector: 'app-test',                      <app-test></app-test>
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+})
 
-## Further help
+> as a class
+@Component({
+  selector: '.app-test',                      <div class="app-test"></div>
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+})
+
+> enclose a [] bracket
+@Component({
+  selector: '[app-test]',                    <div app-test></div>
+
+})
+
+```
+
+### Generate the inline template and css
+
+```
+@Component({
+  selector: 'app-test',
+  template: `<div>
+              <h2>
+              Hello World!
+              </h2>
+             </div>`,
+    styles: [`
+        div {
+            color: red;
+        },
+        .success{
+            color: red;
+            fontStyle: italic
+        }
+    `]
+})
+
+```
+
+### Property binding
+
+#### class binding:
+
+```
+    <h2 class="success">Class Binding!</h2>
+    <h2 [class]="textSuccess">Class Binding!</h2>
+    <h2 [class.error]="hasErr">Conditional Class Binding!</h2>
+    <h2 [ngClass]="msgClasses">Conditional Multiple Class Binding!</h2>
+```
+
+#### style binding:
+
+```
+    <h2 [style.color]="'orange'">Style Binding!</h2>
+    <h2 [style.color]="higlightColor">
+      Style Binding as like property binding!
+    </h2>
+    <h2 [style.color]="hasErr ? 'red' : 'green'">Conditional Style Binding!</h2>
+    <h2 [ngStyle]="titleStyles">Multiple Style Binding!</h2> `,
+
+```
+
+### Component:
+
+```
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-test',
+
+  // templateUrl: './test.component.html',
+  template: `<h2>{{ name }}</h2>
+    <h2 class="success">Class Binding!</h2>
+    <h2 [class]="textSuccess">Class Binding!</h2>
+    <h2 [class.error]="hasErr">Conditional Class Binding!</h2>
+    <h2 [ngClass]="msgClasses">Conditional Multiple Class Binding!</h2>
+
+    <h2 [style.color]="'orange'">Style Binding!</h2>
+    <h2 [style.color]="higlightColor">
+      Style Binding as like property binding!
+    </h2>
+    <h2 [style.color]="hasErr ? 'red' : 'green'">Conditional Style Binding!</h2>
+    <h2 [ngStyle]="titleStyles">Multiple Style Binding!</h2> `,
+
+  // styleUrls: ['./test.component.css']
+  styles: [
+    `
+      .success {
+        color: green;
+      }
+      .error {
+        color: red;
+        fontstyle: italic;
+      }
+      .info {
+        color: blue;
+      }
+    `,
+  ],
+})
+export class TestComponent {
+  public name = 'Property Binding!';
+  public textSuccess = 'success';
+  public higlightColor = 'orange';
+  public hasErr = true;
+  public info = true;
+
+  public msgClasses = {
+    success: !this.hasErr,
+    info: this.info,
+  };
+  public titleStyles = {
+    color: 'blue',
+    fontStyle: 'italic',
+  };
+}
+
+```
+
+### Template Reference Variables e.g (#myInput)
+
+```
+<input #myInput type="text">
+<button (click) = "logMsg(myInput)">log</button>
+
+```
+
+### Two way binding
+
+you need to import the forms module in app.module.ts file for this since ngModule is a part of forms module
+
+```
+<input [(ngModel)]="name" type="text">
+{{name}}
+
+```
+
+### Structural Directives
+
+#### Add or removehtml elements
+
+```
+ngIf
+ngSwitch
+ngFor
+```
+
+### use case of ngIf:
+
+using template reference #<>
+
+```
+<div *ngIf="displayName; then thenBlock; else elseBlock">
+
+<ng-template #thenBlock>
+<p>Success</p>
+</ng-template>
+
+<ng-template #elseBlock>
+<p>Hidden</p>
+</ng-template>
+```

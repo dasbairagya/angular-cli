@@ -1,0 +1,12 @@
+<h2>-> Directives works!</h2>
+<div *ngIf="displayToggle; then thenBlock else elseBlock">
+
+</div>
+
+<ng-template #thenBlock>
+    <p>Success!</p>
+</ng-template>
+
+<ng-template #elseBlock>
+<p>Hidden!</p>
+</ng-template>
