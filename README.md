@@ -203,3 +203,27 @@ using template reference #<>
 <p>Hidden</p>
 </ng-template>
 ```
+
+
+### Service
+```
+> ng g s employee
+```
+the above command will generage employee.service.ts in your app root dir
+
+### Register the service with injector
+to get the service in all the components inject the service in your root module(app.module.ts) via provider metadata
+and at the top of the class mention the decorator @Injectable()
+```
+providers: [EmployeeSrvice]
+```
+
+Now declare as dipendency in the components which need EmployeeService
+
+### Api interation
+
+1. include the HttpClientModule module in the app.module.ts
+2. injected the module as a dependency at the EmployeeService service
+3. get() method retuns an Observable but we need to convert it to a usable type in our applicaton
+4. Hence we create an interface and pass the Observable and caset to an array of Employees
+5. but the Observable does not provide the data hence subscibe() is required when implementing the results
