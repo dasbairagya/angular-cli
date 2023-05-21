@@ -220,10 +220,16 @@ providers: [EmployeeSrvice]
 
 Now declare as dipendency in the components which need EmployeeService
 
-### Api interation
+### Api Interation
 
 1. include the HttpClientModule module in the app.module.ts
 2. injected the module as a dependency at the EmployeeService service
 3. get() method retuns an Observable but we need to convert it to a usable type in our applicaton
 4. Hence we create an interface and pass the Observable and caset to an array of Employees
 5. but the Observable does not provide the data hence subscibe() is required when implementing the results
+
+### Http Error handling
+1. catch the error with along with get mehtod
+```
+
+```
